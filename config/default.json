@@ -1,0 +1,4 @@
+{
+    "mongoUri": "mongodb+srv://shrigorevich:456385@cluster0-rehco.azure.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtSecret": "sl_myJwtSecret"
+}
