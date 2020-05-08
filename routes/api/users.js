@@ -3,8 +3,8 @@ const router = Router();
 const User = require("../../models/User");
 const Counter = require("../../models/Counter");
 const bcrypt = require("bcryptjs");
-const config = require('config');
-const jwt = require('jsonwebtoken')
+const config = require("config");
+const jwt = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
    const { username, password } = req.body;
@@ -24,22 +24,23 @@ router.post("/", async (req, res) => {
          if (err) throw err;
          user.password = hash;
          user.save().then((user) => {
-          //Create token
-          jwt.sign(
-            {id: user.id},
-            config.get('jwtSecret'),
-            { expiresIn: 3600 },
-            (err, token) => {
-              if(err) throw err;
-              res.json({
-                token,
-                user: {
-                   id: user.id,
-                   username: user.username
-                },
-             });
-            }
-          )
+            //Create token
+            jwt.sign(
+               { id: user.id },
+               config.get("jwtSecret"),
+               { expiresIn: '24h' },
+               (err, token) => {
+                  if (err) throw err;
+                  res.json({
+                     token,
+                     user: {
+                        id: user.id,
+                        username: user.username,
+                     },
+                     msg: "User creater!",
+                  });
+               }
+            );
          });
       });
    });
@@ -70,5 +71,3 @@ module.exports = router;
 
 //    return await sequenceDocument.seq;
 // }
-
-

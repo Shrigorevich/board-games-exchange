@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Header from "./../components/Header";
+import React, {useState, useEffect} from "react";
+import Header from "../components/Header";
 import Registration from "./../components/Registration";
+import Cpanel from "./../components/сreation-panel"
 import { useHttp } from "./../hooks/httphook";
 import get_cookie from "./../get-cookie"
 
-const Main = (props) => {
-   
+const Profile = (props) => {
+
    const { request } = useHttp();
 
    const [viewParams, setParams] = useState({
@@ -83,8 +84,13 @@ const Main = (props) => {
       <div>
          <Header toggle={showReg} view={{logView: viewParams.logView, user: viewParams.userData}} logIn={logIn} />
          <Registration view={viewParams} addUser={addUser} />
+         <div className="profile-body">
+            <div className="own-games">
+            </div>
+            <Cpanel/>
+         </div>
       </div>
    );
-};
+}
 
-export default Main;
+export default Profile;

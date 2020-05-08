@@ -1,18 +1,15 @@
 import { useCallback } from "react";
 import get_cookie from "./../get-cookie";
-export const useHttp = () => {
-   const request = useCallback(
-      async (url, method = "GET", body = null, headers = {}) => {
+export const useFormDataReq = () => {
+   const formDataReq = useCallback(
+      async (url, method = "GET", body = null, headers = {}) => {        
          try {
-            if (body) {
-               body = JSON.stringify(body);
-               headers["Content-Type"] = "application/json";
-            }
             headers["x-auth-token"] = get_cookie("token");
+         
             const response = await fetch(`http://localhost:5000${url}`, {
                method,
                body,
-               headers,
+               headers
             });
             const req_data = await response.json();
 
@@ -28,5 +25,5 @@ export const useHttp = () => {
       []
    );
 
-   return { request };
+   return { formDataReq };
 };

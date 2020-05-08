@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from "react";
-import {useHttp} from "./../hooks/httphook"
+import React, {useState} from "react";
 
 const Registration = (props) => {
 
@@ -8,23 +7,12 @@ const Registration = (props) => {
       password: "",
    })
 
-   const {request} = useHttp()
-
    const changeHandler = (event) => {
       setForm({ ...form, [event.target.name]: event.target.value });
    }
 
-   const addUser = async () => {
-      try {
-         const req = await request("/api/users", "POST", {...form});
-         
-         console.log(req);
-         
-      } catch (e) {}
-   };
-
    return (
-      <div>
+      <div className={props.view.regView ? "reg-visible" : "reg-hidden"}>
          <div className="reg-input-block">
             <span>Username</span>
             <input name="username" type="text" value={form.username} onChange={changeHandler}/>
@@ -34,8 +22,9 @@ const Registration = (props) => {
             <input name="password" type="password" value={form.password} onChange={changeHandler}/>
          </div>
          <div>
-            <button className="btn btn-success" onClick={addUser}>Sign Up</button>
+            <button className="btn btn-success" onClick={() => {props.addUser({...form})}}>Sign Up</button>
          </div>
+         <p className="reg-status">{props.view.msg}</p>
       </div>
    );
 }
