@@ -1,9 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {useHttp} from "./../hooks/httphook"
-import Header from "./Header"
 import {useFormDataReq} from "./../hooks/formDataReq"
-import axios from "axios"
-import get_cookie from "./../get-cookie"
 
 const Cpanel = (props) => {
 
@@ -32,19 +28,7 @@ const Cpanel = (props) => {
       formData.append('price', form.price);
 
       const req = await formDataReq("/api/games/create-game", "POST", formData)
-      console.log(req);
-      
-      // let response = await fetch('http://localhost:5000/api/games/create-game', {
-      //    method: 'POST',
-      //    body: formData,
-      //    headers: {
-      //       "Content-Type": 'multipart/form-data',
-      //       "x-auth-token": get_cookie("token")
-      //    }
-      //  });
- 
-      //axios.post('http://localhost:5000/api/games/create-game', formData)
-      
+      console.log(req);   
    }
 
    return (

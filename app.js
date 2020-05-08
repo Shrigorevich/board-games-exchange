@@ -5,6 +5,7 @@ const cors = require("cors"); /*for development*/
 const session = require("express-session");
 const User = require("./models/User");
 const app = express();
+
 process.env.NODE_CONFIG_DIR = './config'
 connectDB();
 
