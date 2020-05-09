@@ -1,9 +1,6 @@
-import React, {useState, useEffect} from "react"
-import {useFormDataReq} from "./../hooks/formDataReq"
+import React, {useState} from "react"
 
 const Cpanel = (props) => {
-
-   const {formDataReq} = useFormDataReq()
 
    const [form, setForm] = useState({
       name: "",
@@ -26,9 +23,8 @@ const Cpanel = (props) => {
       formData.append('name', form.name);
       formData.append('picture', form.picture);
       formData.append('price', form.price);
-
-      const req = await formDataReq("/api/games/create-game", "POST", formData)
-      console.log(req);   
+      
+      props.sendGame(formData)
    }
 
    return (
@@ -41,15 +37,15 @@ const Cpanel = (props) => {
             <input type="text" name="name" onChange={changeHandler}/>
          </div>
          <div className="cp-input">
-            <span>Picture</span>
-            <input type="file" name="picture" onChange={changeHandlerImage}/>
-         </div>
-         <div className="cp-input">
             <span>Price</span>
             <input type="text" name="price" onChange={changeHandler}/>
          </div>
+         <div className="cp-input">
+            <span>Picture</span>
+            <input type="file" name="picture" onChange={changeHandlerImage}/>
+         </div>
          <div>
-            <input type="submit" value="Send" className="btn btn-seccess"/>
+            <input type="submit" value="Send" className="btn btn-success"/>
          </div>
       </form>
    );

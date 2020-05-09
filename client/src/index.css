@@ -8,6 +8,7 @@ body {
   width: 80%;
   margin: 0 auto;
   position: relative;
+  
 }
 
 code {
@@ -98,24 +99,82 @@ code {
 }
 /* REGISTRATION */
 
+/* MAIN */
+
+.main-body{
+  padding: 8px 0;
+}
+
+.main-body .games-list{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+/* MAIN */
+
 /* PROFILE */
 .profile-body{
   display: flex;
   justify-content: space-between;
+  background-color: #ecf0f1;
+  min-height: 100vh;
 }
 
 .creation-panel{
-  width: 40%;
-  padding: 16px;
-}
-
-.own-games{
-  width: 60%;
+  width: 30%;
   padding: 16px;
 }
 
 .cp-input{
   display: flex;
   flex-direction: column;
+  margin-bottom: 8px;
 }
+
+.games-list-wrapper{
+  width: 70%;
+  padding: 8px 16px 16px 16px;
+}
+
+.games-list{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.game-card{
+  padding: 8px;
+}
+
+.game-card-head{
+  width: 100%;
+  height: 250px;
+}
+
+.game-card-body{
+  padding: 8px;
+  background-color: #d6d9da;
+  border-radius: 0 0 5px 5px;
+}
+
+.game-card-body p{
+  margin-bottom: 8px;
+}
+
+.img{
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border: 1px solid #b3b7b8;
+  border-radius: 5px 5px 0 0;
+}
+
+.list-toggle{
+  margin-left: 8px;
+}
+
+.list-toggle a{
+  color: #218f4f;
+}
+
 /* PROFILE */

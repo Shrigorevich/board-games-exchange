@@ -6,6 +6,7 @@ const schema = new Schema({
    picture: {type: String, required: false},
    price: {type: Number, required: false},
    userid: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+   username: {type: String, required: true},
    date: {type: Date, default: Date.now}
 })
 

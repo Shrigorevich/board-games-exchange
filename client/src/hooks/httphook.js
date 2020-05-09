@@ -19,7 +19,7 @@ export const useHttp = () => {
             if (!response.ok) {
                throw new Error(req_data.msg || "Somesong is wrong");
             }
-            return { data: req_data, status: true, msg: req_data.msg };
+            return { data: req_data, status: true };
          } catch (e) {
             console.log(e);
             return { msg: e.message, status: false };

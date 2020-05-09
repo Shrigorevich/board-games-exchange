@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {Link} from "react-router-dom";
-import get_cookie from "./../get-cookie";
 
 function Header(props) {
    
@@ -20,7 +19,7 @@ function Header(props) {
             <span className="nav-bar-item"><Link to="/profile">PROFILE</Link></span>
             <span></span>
          </div>
-         {!props.view.logView ? (
+         {!props.auth ? (
             <div className="auth">
                <button className="btn btn-dark" onClick={() => props.toggle()}>
                   Sign Up
@@ -46,7 +45,7 @@ function Header(props) {
                   onChange={changeHandler}
                />
             </div>
-         ) : <span className="username" >Hello, {props.view.user.username}</span>}
+         ) : <span className="username" >Hello, {props.user.username}</span>}
       </div>
    );
 }
