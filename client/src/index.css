@@ -8,7 +8,7 @@ body {
   width: 80%;
   margin: 0 auto;
   position: relative;
-  
+  color: rgb(236, 236, 236)
 }
 
 code {
@@ -16,10 +16,24 @@ code {
     monospace;
 }
 
+.main-body, .exchange-body, .profile-body{
+  background-color: #222;
+  min-height: 100vh;
+}
+
+.btn-success{
+  background-color: #44D62C;
+  color: #000;
+}
+
+a, a:hover{
+  text-decoration: none;
+}
+
 /* HEADER */
 .header{
   width: 100%;
-  background-color: #27ae60;
+  background-color: #111;
   display: flex;
   justify-content: space-between;
   padding: 12px 20px;
@@ -54,7 +68,15 @@ code {
 }
 
 .header a{
-  color: #fff;
+  color: #969696;
+}
+
+.header a:hover{
+  color: #44D62C;
+}
+
+.username{
+  margin-left: 16px;
 }
 
 /* HEADER */
@@ -101,14 +123,15 @@ code {
 
 /* MAIN */
 
-.main-body{
-  padding: 8px 0;
-}
 
-.main-body .games-list{
+.main-body .games-list, .exchange-body .games-list{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr;
+}
+
+.main-body{
+  padding: 8px 8px;
 }
 /* MAIN */
 
@@ -116,13 +139,11 @@ code {
 .profile-body{
   display: flex;
   justify-content: space-between;
-  background-color: #ecf0f1;
-  min-height: 100vh;
 }
 
 .creation-panel{
   width: 30%;
-  padding: 16px;
+  padding: 16px 16px 16px 8px;
 }
 
 .cp-input{
@@ -131,9 +152,27 @@ code {
   margin-bottom: 8px;
 }
 
+.list-toggle{
+  margin: 0 0 8px 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list-toggle a{
+  color: #969696;
+}
+
+.list-toggle a:hover{
+  color: #fff;
+}
+
+/* PROFILE */
+
+/* GAME CARD */
+
 .games-list-wrapper{
   width: 70%;
-  padding: 8px 16px 16px 16px;
+  padding: 8px 8px 16px 16px;
 }
 
 .games-list{
@@ -152,29 +191,118 @@ code {
 }
 
 .game-card-body{
-  padding: 8px;
-  background-color: #d6d9da;
+  padding: 8px 16px;
+  background-color: #111;
   border-radius: 0 0 5px 5px;
+  height: calc(100% - 250px);
+  font-family: Roboto, Helvetica, sans-serif;
+  color:#fff;
 }
 
 .game-card-body p{
   margin-bottom: 8px;
 }
 
+.game-card-body a:hover{
+  color:#44D62C;
+}
+
+.my-game-status{
+  color: #44D62C;
+}
+
 .img{
   width: 100%;
   height: 100%;
   object-fit: fill;
-  border: 1px solid #b3b7b8;
   border-radius: 5px 5px 0 0;
 }
 
-.list-toggle{
-  margin-left: 8px;
+/* GAME CARD */
+
+/* EXCHANGE */
+.exchange-card{
+  width: 250px;
 }
 
-.list-toggle a{
-  color: #218f4f;
+.exchange-body{
+  padding: 8px;
 }
 
-/* PROFILE */
+.exchange-body .offer-button{
+  justify-content: flex-end;
+}
+
+.new-exchange{
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  border-bottom: 1px solid #44D62C;
+  margin-bottom: 8px;
+  background-color: #111;
+}
+
+.new-exchange .game-card-body{
+  background-color: #222;
+}
+
+.gag{
+  width: 250px;
+  min-height: 100%;
+  border-radius: 5px;
+  border: 1px solid #b3b7b8;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.exchange-offer-wrapper{
+  width: 200px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin: 0 8px;
+}
+
+.offer-button{
+  width: 100px;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 50px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.offer-status{
+  width: 140px;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 70px);
+  text-align: center;
+}
+
+.img-exchange{
+  width: 100%;
+  height: auto;
+}
+
+.hr{
+  border-color: #979797;
+}
+
+.active-exchange{
+  color: #44D62C
+}
+
+.waiting-answer{
+  color: #dac71d;
+}
+
+.rejected-exchange{
+  color: #f01b1b;
+}
+/* EXCHANGE */

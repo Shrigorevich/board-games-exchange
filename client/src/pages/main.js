@@ -36,6 +36,12 @@ const Main = (props) => {
 		} catch (error) {}
 	};
 
+	const logOut = () => {
+        console.log('log out', props.user._id);
+        document.cookie = `token=${props.user._id}; max-age=0`;
+        props.verify()
+    }
+
 	const addUser = async (data) => {
 		try {
 			const req = await request("/api/users", "POST", data);
@@ -80,10 +86,11 @@ const Main = (props) => {
 				auth={props.auth}
 				user={props.user}
 				logIn={logIn}
+				logOut={logOut}
 			/>
 			<Registration view={viewParams} addUser={addUser} />
 			<div className="main-body">
-				{games.list ? <GameList list={games.list} /> : null}
+				{games.list ? <GameList list={games.list} user={props.user}/> : null}
 			</div>
 		</div>
 	);

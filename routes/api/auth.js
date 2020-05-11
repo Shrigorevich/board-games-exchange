@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const router = Router();
 const User = require("../../models/User");
-const Counter = require("../../models/Counter.js");
 const bcrypt = require("bcryptjs");
 const config = require("config");
 const jwt = require("jsonwebtoken");

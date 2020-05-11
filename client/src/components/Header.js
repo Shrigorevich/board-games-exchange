@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Link} from "react-router-dom";
 
 function Header(props) {
-   
+
    const [form, setForm] = useState({
       username: "",
       password: "",
@@ -17,7 +17,7 @@ function Header(props) {
          <div className="nav-bar">
             <span className="nav-bar-item"><Link to="/">MAIN</Link></span>
             <span className="nav-bar-item"><Link to="/profile">PROFILE</Link></span>
-            <span></span>
+            <span className="nav-bar-item"><Link to="/exchange">EXCHANGE</Link></span>
          </div>
          {!props.auth ? (
             <div className="auth">
@@ -45,7 +45,14 @@ function Header(props) {
                   onChange={changeHandler}
                />
             </div>
-         ) : <span className="username" >Hello, {props.user.username}</span>}
+         ) : (
+            <div>
+               <button className="btn btn-light" onClick={() => props.logOut()}>
+                  Log Out
+               </button>
+               <span className="username" >Hello, {props.user.username}</span>
+            </div>
+         )}
       </div>
    );
 }

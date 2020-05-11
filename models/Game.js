@@ -1,7 +1,7 @@
 const {Schema, model, Types} = require('mongoose');
 const mongoose = require('mongoose');
 
-const schema = new Schema({
+const schema1 = new Schema({
    name: {type: String, required: true},
    picture: {type: String, required: false},
    price: {type: Number, required: false},
@@ -10,4 +10,20 @@ const schema = new Schema({
    date: {type: Date, default: Date.now}
 })
 
-module.exports = model('Game', schema)
+const schema2 = new Schema({
+   firstGame: {type: schema1, required: true},
+   secondGame: {type: schema1, required: true},
+   firstUser: {type: {}, required: true},
+   secondUser: {type: {}, required: true},
+   status: {type: Boolean, required: true},
+   date: {type: Date, default: Date.now}
+})
+
+const Game = model('Game', schema1);
+const Exchange = model('Exchange', schema2)
+
+module.exports = {
+   Game,
+   Exchange   
+}
+

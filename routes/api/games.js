@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const User = require("../../models/User");
-const Game = require("../../models/Game");
+const {Game} = require("../../models/Game");
 const auth = require("./../../middlwares/auth");
 const imgurUpload = require("./../../middlwares/imgur-upload");
 const multer = require("multer");
