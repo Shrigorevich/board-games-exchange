@@ -6,6 +6,8 @@ const config = require("config");
 const jwt = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
+   console.log('reg');
+   
    const { username, password } = req.body;
    //Simple validation
    if (!username || !password) {
@@ -46,27 +48,3 @@ router.post("/", async (req, res) => {
 });
 
 module.exports = router;
-
-// try {
-//    const ctr = new Counter({
-//       _id: "gameid",
-//       seq: 0
-//    })
-//    ctr.save().then((res, rej) => {console.log('Success');
-//    })
-
-//  } catch (e) {
-//    console.log(e);
-
-//  }
-
-// async function getNextSequenceValue(sequenceName) {
-//    let filter = { _id: sequenceName };
-//    let update = { $inc: { seq: 1 } };
-//    let sequenceDocument = await Counter.findOneAndUpdate(filter, update, {
-//       new: true,
-//    });
-//    console.log(sequenceDocument);
-
-//    return await sequenceDocument.seq;
-// }

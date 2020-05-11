@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 const auth = require("./../../middlwares/auth");
 
 router.post("/", async (req, res) => {
+   console.log('login');
+   
    const { username, password } = req.body;
 
    //Simple validation
@@ -40,15 +42,10 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/profile", auth, (req, res) => {
+   console.log('profile');
     User.findById(req.user.id)
        .select("-password")
        .then((user) => res.json(user));
-});
-
-router.get("/logout", (req, res) => {
-   req.session.destroy((err) => {
-      if (err) console.log(err);
-   });
 });
 
 module.exports = router;
