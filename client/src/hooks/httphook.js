@@ -8,11 +8,10 @@ export const useHttp = () => {
                body = JSON.stringify(body);
                headers["Content-Type"] = "application/json";
             }
-            if(url==='/'){
-               body = JSON.stringify(body);
-               headers["Content-Type"] = "application/json";
-            }
-            headers["x-auth-token"] = get_cookie("token");
+            if(url !== '/api/games/full-list'){
+               log('token ignore')
+               headers["x-auth-token"] = get_cookie("token");
+            } 
             const response = await fetch(`${url}`, {
                method,
                body,

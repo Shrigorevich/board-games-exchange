@@ -75,7 +75,6 @@ const Main = (props) => {
    
 	useEffect(() => {
 		console.log("verify");
-		props.verify();
 		getGames();
 	}, [props.auth]);
 
