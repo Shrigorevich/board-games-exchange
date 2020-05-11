@@ -26,7 +26,7 @@ app.use(
 app.use(express.json({ extended: true }));
 //app.use(cors()); /*for development*/
 
-app.use("/", require("./routes/default"))
+//app.use("/", require("./routes/default"))
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/games", require("./routes/api/games"));
