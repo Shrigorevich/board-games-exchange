@@ -9,7 +9,7 @@ export const useHttp = () => {
                headers["Content-Type"] = "application/json";
             }
             headers["x-auth-token"] = get_cookie("token");
-            const response = await fetch(`http://localhost:5000${url}`, {
+            const response = await fetch(`${url}`, {
                method,
                body,
                headers,
