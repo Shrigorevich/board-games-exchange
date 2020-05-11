@@ -35,25 +35,21 @@ function App() {
    }, []);
 
 	return (
-		<div>
-			kek
-		</div>
+		<Router>
+			<Switch>
+				<Route path="/" exact>
+					<Main auth={state.auth} user={state.userdata} verify={verify} />
+				</Route>
+				<Route path="/profile">
+					<Profile auth={state.auth} user={state.userdata} verify={verify}/>
+				</Route>
+				<Route exact path="/exchange:game" render={(props) => (<Exchange {...props} auth={state.auth} user={state.userdata} verify={verify}/>)}/>
+				<Route exact path="/exchange">
+					<Exchange auth={state.auth} user={state.userdata} verify={verify}/>
+				</Route>
+			</Switch>
+		</Router>
 	);
-
-	// <Router>
-	// 		<Switch>
-	// 			<Route path="/" exact>
-	// 				<Main auth={state.auth} user={state.userdata} verify={verify} />
-	// 			</Route>
-	// 			<Route path="/profile">
-	// 				<Profile auth={state.auth} user={state.userdata} verify={verify}/>
-	// 			</Route>
-	// 			<Route exact path="/exchange:game" render={(props) => (<Exchange {...props} auth={state.auth} user={state.userdata} verify={verify}/>)}/>
-	// 			<Route exact path="/exchange">
-	// 				<Exchange auth={state.auth} user={state.userdata} verify={verify}/>
-	// 			</Route>
-	// 		</Switch>
-	// 	</Router>
 }
 
 export default App;
