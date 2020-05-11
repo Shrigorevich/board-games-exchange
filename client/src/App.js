@@ -15,6 +15,8 @@ function App() {
 
 	const verify = async () => {
 		const req = await request("/");
+		console.log(req);
+		
 		if (req.status) {
 			setState({
             auth: true,
@@ -36,7 +38,7 @@ function App() {
 		<Router>
 			<Switch>
 				<Route path="/" exact>
-					<Main auth={state.auth} user={state.userdata} verify={verify} />
+					{state.auth ? <Main auth={state.auth} user={state.userdata} verify={verify} /> : null}
 				</Route>
 				<Route path="/profile">
 					<Profile auth={state.auth} user={state.userdata} verify={verify}/>
