@@ -6,6 +6,12 @@ const config = require("config");
 const jwt = require("jsonwebtoken");
 const auth = require("./../../middlwares/auth");
 
+router.get("/verify", auth, async (req, res) => {
+   const user = await User.findById(req.user.id)
+   .select("-password")
+   res.status(200).json({user: user, msg: "Verified"})
+});
+
 router.post("/", async (req, res) => {
    console.log('login');
    
