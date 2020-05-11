@@ -9,7 +9,7 @@ export const useHttp = () => {
                headers["Content-Type"] = "application/json";
             }
             if(url !== '/api/games/full-list'){
-               log('token ignore')
+               console.log('token ignore')
                headers["x-auth-token"] = get_cookie("token");
             } 
             const response = await fetch(`${url}`, {
