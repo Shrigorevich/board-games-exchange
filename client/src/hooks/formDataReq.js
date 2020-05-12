@@ -6,7 +6,7 @@ export const useFormDataReq = () => {
          try {
             headers["x-auth-token"] = get_cookie("token");
          
-            const response = await fetch(`${url}`, {
+            const response = await fetch(`http://localhost:5000${url}`, {
                method,
                body,
                headers

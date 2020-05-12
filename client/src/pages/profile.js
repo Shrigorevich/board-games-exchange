@@ -79,6 +79,7 @@ const Profile = (props) => {
 			formData
 		);
 		console.log(req);
+		document.location.reload()
 	};
 
 	const getData = async () => {
