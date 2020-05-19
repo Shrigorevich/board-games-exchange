@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   position: relative;
   color: rgb(236, 236, 236);
@@ -17,13 +17,13 @@ code {
     monospace;
 }
 
-.main-body, .exchange-body, .profile-body{
+.main-body, .exchange-body, .profile-body, .profile-overview-body{
   background-color: #222;
   min-height: 100vh;
 }
 
 .btn-success{
-  background-color: #44D62C;
+  background-color: rgb(55, 177, 36);
   color: #fff;
 }
 
@@ -48,6 +48,7 @@ a, a:hover{
 
 .nav-bar-item{
   margin-right: 16px;
+  color: #969696
 }
 
 .auth{
@@ -121,7 +122,7 @@ a, a:hover{
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,.9);
+  background: rgba(0,0,0,.8);
   z-index: 2;
   width: 100vw;
   height: 100vh;
@@ -161,14 +162,53 @@ a, a:hover{
 /* MAIN */
 
 
-.main-body .games-list, .exchange-body .games-list{
+.main-body .games-list, .exchange-body .games-list, .profile-overview-body .games-list{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr;
 }
 
 .main-body{
   padding: 8px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.form-search-visible{
+  width: 400px;
+  display: flex;
+  align-items: center;
+  /* -webkit-transform: translateY(0%);
+  -moz-transform: translateY(0%);
+  -ms-transform: translateY(0%);
+  -o-transform: translateY(0%);
+  transform: translateY(0%); */
+}
+.form-search-hidden{
+  width: 350px;
+  display: flex;
+  align-items: center;
+  /* -webkit-transform: translateY(-200%);
+  -moz-transform: translateY(-200%);
+  -ms-transform: translateY(-200%);
+  -o-transform: translateY(-200%);
+  transform: translateY(-200%); */
+  display: none;
+}
+.input-search{
+  width: 250px;
+  height: calc(1.5em + .75rem + 2px);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem
 }
 /* MAIN */
 
@@ -178,8 +218,22 @@ a, a:hover{
   justify-content: space-between;
 }
 
+.profile-body .profile-card{
+  width: 100%;
+  padding: 16px;
+  border-bottom: 1px solid #44D62C;
+  background-color: #111;
+}
+.profile-card-wrapper{
+  margin: 16px 16px 0 0;
+}
+
+.right-side{
+  width: 35%;
+}
+
 .creation-panel{
-  width: 30%;
+  width: 100%;
   padding: 16px 16px 16px 8px;
 }
 
@@ -203,12 +257,13 @@ a, a:hover{
   color: #fff;
 }
 
+
 /* PROFILE */
 
 /* GAME CARD */
 
 .games-list-wrapper{
-  width: 70%;
+  width: 65%;
   padding: 8px 8px 16px 16px;
 }
 
@@ -225,6 +280,8 @@ a, a:hover{
 .game-card-head{
   width: 100%;
   height: 250px;
+  background-color: #fff;
+  border-radius: 5px 5px 0 0;
 }
 
 .game-card-body{
@@ -240,8 +297,12 @@ a, a:hover{
   margin-bottom: 8px;
 }
 
+.to-exchange{
+  color: #44D62C
+}
+
 .game-card-body a:hover{
-  color:#44D62C;
+  color: #44D62C;
 }
 
 .my-game-status{
@@ -343,3 +404,107 @@ a, a:hover{
   color: #f01b1b;
 }
 /* EXCHANGE */
+
+/* PROFILE-OVERBIEW */
+
+.profile-overview-body{
+  padding: 8px;
+}
+
+.about-user{
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #44D62C;
+  margin-bottom: 8px;
+  background-color: #111;
+  min-height: 200px;
+  max-height: 400px;
+  padding: 16px;
+  justify-content: space-between;
+}
+
+.profile-card{
+  width: 50%;
+  display: flex;
+}
+
+.avatar{
+  width: 40%;
+  overflow: hidden;
+}
+
+.user-data{
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  padding: 8px 8px 8px 12px;
+}
+
+.feedback-form{
+  width: 25%;
+  border: 1px solid #969696;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.textarea-wrapper{
+  flex: 1;
+  margin: 12px 0;
+}
+
+.comment-textarea{
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+}
+
+.rate{
+  color: gold;
+}
+
+.comments-list{
+  width: 100%;
+  border-bottom: 1px solid #44D62C;
+  border-top: 1px solid #44D62C;
+  margin-bottom: 8px;
+  background-color: #111;
+  padding: 16px;
+}
+
+.comment{
+  margin-bottom: 16px;
+  width: 50%;
+}
+
+.avatar-mini{
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 25px;
+  margin-right: 16px;
+}
+
+.comment-user{
+  display: flex;
+  flex-direction: column;
+  color: #969696;
+}
+
+.comment-text{
+  margin-top: 12px;
+}
+
+/* PROFILE-OVERBIEW */
+
+/* INPUT FILE */
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+/* INPUT FILE */

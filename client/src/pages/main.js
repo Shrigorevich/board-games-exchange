@@ -7,90 +7,74 @@ import GameList from "./../components/gamesList";
 const Main = (props) => {
 	const { request } = useHttp();
 
-	const [viewParams, setParams] = useState({
-		regView: false,
-		regMsg: "",
-	});
-
 	const [games, setGames] = useState({
 		list: null,
 	});
 
-	const showReg = () => {
-		setParams((viewParams) => {
-			return {
-				...viewParams,
-				regView: !viewParams.regView,
-			};
-		});
-	};
+	const [form, setForm] = useState({
+		str: ""
+	});
 
-	const logIn = async (data) => {
-		try {
-			const req = await request("/api/auth/", "POST", data);
-			if (req.status) {
-				console.log("new cookie");
-				document.cookie = `token=${req.data.token}; max-age=85000`;
-				props.verify();
-			}
-		} catch (error) {}
-	};
-
-	const logOut = () => {
-        console.log('log out', props.user._id);
-        document.cookie = `token=${props.user._id}; max-age=0`;
-        props.verify()
-    }
-
-	const addUser = async (data) => {
-		try {
-			const req = await request("/api/users", "POST", data);
-			
-			setParams((viewParams) => {
-				return {
-					...viewParams,
-					regMsg: req.msg,
-				};
-			});
-			if (req.status) {
-				document.cookie = `token=${req.data.token}; max-age=85000`;
-				props.verify();
-				setTimeout(() => {
-					setParams((viewParams) => {
-						return {
-							regView: false,
-							regMsg: "",
-						};
-					});
-				}, 1500);
-			}
-		} catch (e) {}
-	};
+	const [show, setShow] = useState({
+		state: false
+	})
 
 	const getGames = async () => {
 		const req = await request("/api/games/full-list", "GET");
 		setGames({
 			list: req.data,
 		});
-   };
-   
+	};
+
+	const changeHandler = (event) => {
+		setForm({ ...form, [event.target.name]: event.target.value });
+	};
+
+	const search = async () => {
+		const req = await request(`/api/games/search/${form.str}`)
+		setGames({
+			list: req.data,
+		});
+	}
+
+	const searchToggle = () => {		
+		setShow(show => {
+			return {
+				state: !show.state
+			}
+		})
+	}
+
 	useEffect(() => {
-		console.log("verify");
 		getGames();
 	}, [props.auth]);
 
 	return (
-		<div>
+		<div className="main">
 			<Header
-				toggle={showReg}
+				toggle={props.showReg}
 				auth={props.auth}
 				user={props.user}
-				logIn={logIn}
-				logOut={logOut}
+				logIn={props.logIn}
+				logOut={props.logOut}
+				search={searchToggle}
 			/>
-			<Registration view={viewParams} addUser={addUser} toggle={showReg} />
+			<Registration
+				view={props.viewParams}
+				addUser={props.addUser}
+				toggle={props.showReg}
+			/>
 			<div className="main-body">
-				{games.list ? <GameList list={games.list} user={props.user}/> : null}
+				<div className={show.state ? 'form-search-visible' : 'form-search-hidden'}>
+					<input value={form.str} onChange={changeHandler} name="str" className="input-search mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+					<button className="btn btn-outline-success my-2 my-sm-0" onClick={search}>Search</button>
+				</div>
+				{games.list ? (
+					<GameList
+						list={games.list}
+						loggedUser={props.user ? props.user.username : null}
+					/>
+				) : null}
 			</div>
 		</div>
 	);

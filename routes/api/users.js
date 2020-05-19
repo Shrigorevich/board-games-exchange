@@ -1,13 +1,18 @@
 const { Router } = require("express");
 const router = Router();
 const User = require("../../models/User");
+const { Game } = require("../../models/Game")
+const Comment = require("../../models/Comment")
 const bcrypt = require("bcryptjs");
 const config = require("config");
 const jwt = require("jsonwebtoken");
+const auth = require('../../middlwares/auth')
+const imgurUpload = require("./../../middlwares/imgur-upload");
+const upload = require("../../middlwares/multer");
+const cleaner = require('./../../middlwares/cleaner')
 
 router.post("/", async (req, res) => {
-   console.log('reg');
-   
+
    const { firstName, lastName, username, email, password } = req.body;
    //Simple validation
    if (!firstName) {
@@ -27,21 +32,23 @@ router.post("/", async (req, res) => {
    }
 
    //Check for existing user
-   const check = await User.findOne({$or:[ 
-      {email}, {username} 
-   ]});
+   const check = await User.findOne({
+      $or: [
+         { email }, { username }
+      ]
+   });
 
-   if(check){
-      if(check.email === email){
+   if (check) {
+      if (check.email === email) {
          console.log('email exists');
          return res.status(400).json({ msg: "User already exists. Email must be unique!" });
-      }else if(check.username === username){
+      } else if (check.username === username) {
          console.log('username exists');
          return res.status(400).json({ msg: "User already exists. Username must be unique!" });
       }
    }
 
-   const user = new User({ firstName, lastName, username, email, password });
+   const user = new User({ firstName, lastName, username, email, password, avatar: 'https://i.imgur.com/8GxCozl.png' });
    //Create salt & hash
    bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(user.password, salt, (err, hash) => {
@@ -70,4 +77,49 @@ router.post("/", async (req, res) => {
    });
 });
 
+router.get('/get-user/:username', async (req, res) => {
+   const user = await User.findOne({ username: req.params.username }).select("-password")
+   const games = await Game.find({ username: req.params.username })
+   const comments = await Comment.find({ to: user._id }).populate('from')
+
+   res.status(200).json({ user, games, comments })
+})
+
+router.post("/leave-comment", auth, async (req, res) => {
+   const { text, rate } = req.body;
+
+   const comment = new Comment({
+      rate,
+      text,
+      to: req.body.to,
+      from: req.user.id
+   })
+
+   comment.save().then(comment => {
+      console.log("Comment: ", comment);
+      if (comment) {
+         res.status(201).json({ msg: "Comment added" })
+      } else {
+         res.status(400).json({ msg: "Error" })
+      }
+   })
+})
+
+router.post(
+   "/set-avatar",
+   auth,
+   upload.single("picture"),
+   imgurUpload,
+   cleaner,
+   async (req, res) => {
+      const newUser = await User.findOneAndUpdate(
+         { _id: req.user.id },
+         { avatar: req.imgLink })
+         .select("-password")
+      
+      res.status(200).json({ msg: 'Avatar updated' })
+   }
+)
+
 module.exports = router;
+

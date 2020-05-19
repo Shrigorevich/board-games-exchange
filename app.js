@@ -9,7 +9,7 @@ process.env.NODE_CONFIG_DIR = './config'
 connectDB();
 
 app.use(express.json({ extended: true }));
-app.use(cors()); /*for development*/
+//app.use(cors()); /*for development*/
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/games", require("./routes/api/games"));
@@ -27,6 +27,6 @@ if (process.env.NODE_ENV === "production") {
    });
 }
 
-const PORT = 5000;
+const PORT = 80;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

@@ -23,41 +23,9 @@ const Exchange = (props) => {
         list: null,
         my: null
     })
-
-    const [viewParams, setParams] = useState({
-		regView: false,
-		regMsg: "",
-	});
-
-    const showReg = () => {
-		setParams((viewParams) => {
-			return {
-				...viewParams,
-				regView: !viewParams.regView,
-			};
-		});
-	};
-
-	const logIn = async (data) => {
-		try {
-			const req = await request("/api/auth/", "POST", data);
-			if (req.status) {
-				console.log("new cookie");
-				document.cookie = `token=${req.data.token}; max-age=85000`;
-				props.verify();
-			}
-		} catch (error) {}
-    };
-
-    const logOut = () => {
-        console.log('log out', props.user._id);
-        document.cookie = `token=${props.user._id}; max-age=0`;
-        props.verify()
-    }
     
     const getGames = async () => {
 		const req = await request("/api/games/full-list", "GET");
-        console.log(req)
 		setGames({
             list: req.data,
             my: req.data.filter((item, i) => item.userid === props.user._id)
@@ -85,7 +53,6 @@ const Exchange = (props) => {
 
 
     useEffect(() => {
-		console.log("verify");
         if(props.auth){
             getGames()
         }
@@ -94,12 +61,13 @@ const Exchange = (props) => {
     return (
         <div>
             <Header
-				toggle={showReg}
+				toggle={props.showReg}
 				auth={props.auth}
 				user={props.user}
-                logIn={logIn}
-                logOut={logOut}
+                logIn={props.logIn}
+                logOut={props.logOut}
             />
+            <Registration view={props.viewParams} addUser={props.addUser} />
             {props.auth ? (
                 <div className="exchange-body">
                     <div className="new-exchange">

@@ -7,8 +7,6 @@ router.post("/new-exchange", auth, async (req, res) => {
       
       const {firstGameId, secondGameId, initiator, partner} = req.body;
       
-      const firstGame = await Game.findById({_id: firstGameId});
-      const secondGame = await Game.findById({_id: secondGameId}); 
       const firstUser = {
          _id: initiator,
          status: true
@@ -17,26 +15,48 @@ router.post("/new-exchange", auth, async (req, res) => {
          _id: partner,
          status: true
       }
+
+      console.log(firstGameId, secondGameId);
+      
            
       const exchange = new Exchange({
-         firstGame,
-         secondGame,
+         firstGame: firstGameId,
+         secondGame: secondGameId,
          firstUser,
          secondUser,
          status: false
       })
 
       await exchange.save()
-
+      console.log(
+         exchange
+      );
+      
       res.status(201).json({msg: "Exchange created"})
    }
 );
 
 router.get("/list", auth, async (req, res) => {   
-   const fromMeList = await Exchange.find({$or: [{firstUser: {_id: req.user.id, status: false}}, {firstUser: {_id: req.user.id, status: true}}]}).sort({date: -1});
-   const forMeList = await Exchange.find({$or: [{secondUser: {_id: req.user.id, status: false}}, {secondUser: {_id: req.user.id, status: true}}]}).sort({date: -1});
-   res.status(200).json({fromMeList, forMeList});
-});
+   const fromMeList = await Exchange.find({
+      $or: [
+         { firstUser: { _id: req.user.id, status: false } },
+         { firstUser: { _id: req.user.id, status: true } }
+      ]
+   })
+   .populate('firstGame')
+   .populate('secondGame')
+   .sort({ date: -1 });
+
+   const forMeList = await Exchange.find({
+      $or: [
+         { secondUser: { _id: req.user.id, status: false } },
+         { secondUser: { _id: req.user.id, status: true } }]
+   })
+   .populate('firstGame')
+   .populate('secondGame')
+   .sort({ date: -1 });
+   res.status(200).json({ fromMeList, forMeList });
+})
 
 router.post("/accept", auth, async (req, res) => {
    const {exchangeId} = req.body  

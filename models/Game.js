@@ -11,8 +11,8 @@ const schema1 = new Schema({
 })
 
 const schema2 = new Schema({
-   firstGame: {type: schema1, required: true},
-   secondGame: {type: schema1, required: true},
+   firstGame: {type: Schema.Types.ObjectId, ref: 'Game', required: true},
+   secondGame: {type: Schema.Types.ObjectId, ref: 'Game', required: true},
    firstUser: {type: {}, required: true},
    secondUser: {type: {}, required: true},
    status: {type: Boolean, required: true},

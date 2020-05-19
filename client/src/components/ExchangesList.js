@@ -3,8 +3,6 @@ import ExchangeCard from "./ExchangeCard"
 import {Switch, Route, Redirect} from "react-router-dom"
 
 function ExchangesList(props) {
-
-    console.log(props);
     
 	return (
 		<div className="ExchangesList">
@@ -28,7 +26,7 @@ function ExchangesList(props) {
                                             </div>
                                         ) : (
                                             <div className="offer-status">
-                                                <span className="rejected-exchange">Rejecter by you</span>
+                                                <span className="rejected-exchange">Rejected by you</span>
                                             </div>
                                         )
                                     )}
@@ -57,7 +55,7 @@ function ExchangesList(props) {
                                             </div>
                                         ) : (
                                             <div className="offer-status">
-                                                <span className="rejected-exchange">Rejecter by the user</span>
+                                                <span className="rejected-exchange">Rejected by the user</span>
                                             </div>
                                         )
                                     )}

@@ -6,16 +6,12 @@ import { useHttp } from "./../hooks/httphook";
 import { useFormDataReq } from "./../hooks/formDataReq";
 import GamesList from "./../components/gamesList";
 import ExchangesList from "./../components/ExchangesList";
+import ProfileCard from "./../components/ProfileCard"
 import {NavLink, Switch, Route} from "react-router-dom";
 
 const Profile = (props) => {
 	const { request } = useHttp();
 	const { formDataReq } = useFormDataReq();
-
-	const [viewParams, setParams] = useState({
-		regView: false,
-		regMsg: "",
-	});
 
 	const [data, setData] = useState({
 		games: null,
@@ -23,72 +19,33 @@ const Profile = (props) => {
 
 	});
 
-	const showReg = () => {
-		setParams((viewParams) => {
-			return {
-				...viewParams,
-				regView: !viewParams.regView,
-			};
-		});
-	};
-
-	const logIn = async (data) => {
-		try {
-			const req = await request("/api/auth/", "POST", data);
-			if (req.status) {
-				console.log("new cookie");
-				document.cookie = `token=${req.data.token}; max-age=85000`;
-				props.verify();
-			}
-		} catch (error) {}
-	};
-
-	const addUser = async (data) => {
-		try {
-			const req = await request("/api/users", "POST", data);
-			setParams((viewParams) => {
-				return {
-					...viewParams,
-					regMsg: req.msg,
-				};
-			});
-			if (req.status) {
-				document.cookie = `token=${req.data.token}; max-age=85000`;
-				setTimeout(() => {
-					setParams((viewParams) => {
-						return {
-							regView: false,
-							regMsg: "",
-						};
-					});
-				}, 1500);
-			}
-		} catch (e) {}
-	};
-
-	const logOut = () => {
-        console.log('log out', props.user._id);
-        document.cookie = `token=${props.user._id}; max-age=0`;
-        props.verify()
-    }
-
 	const sendGame = async (formData) => {
 		const req = await formDataReq(
 			"/api/games/create-game",
 			"POST",
 			formData
 		);
-		console.log(req);
 		document.location.reload()
 	};
+
+	const setAvatar = async (formData) => {
+		const req = await formDataReq(
+			"/api/users/set-avatar",
+			"POST",
+			formData
+		);
+		document.location.reload()
+	}
 
 	const getData = async () => {
 		const games = await request("/api/games/list", "GET");
 		const exchanges = await request("/api/exchanges/list", "GET");
-
+		const comments = await request(`/api/users/get-user/${props.user.username}`)
+		
 		setData({
 			games: games.data,
-			exchanges: exchanges.data
+			exchanges: exchanges.data,
+			comments: comments.data.comments
 		});
 	};
 
@@ -102,10 +59,7 @@ const Profile = (props) => {
 		document.location.reload()
 	}
 
-
-
 	useEffect(() => {
-		console.log("verify");
 		if(props.auth){
 			getData();
 		}
@@ -114,13 +68,13 @@ const Profile = (props) => {
 	return (
 		<div>
 			<Header
-				toggle={showReg}
+				toggle={props.showReg}
 				auth={props.auth}
 				user={props.user}
-				logIn={logIn}
-				logOut={logOut}
+				logIn={props.logIn}
+				logOut={props.logOut}
 			/>
-			<Registration view={viewParams} addUser={addUser} />
+			<Registration view={props.viewParams} addUser={props.addUser} />
 			{props.auth ? (
 				<div className="profile-body">
 					<div className="games-list-wrapper">
@@ -140,15 +94,20 @@ const Profile = (props) => {
 						</div>
 						<Switch>
 							<Route path="/profile" exact>
-								{data.games ? <GamesList list={data.games} /> : null}
+								{data.games ? <GamesList myList={true} list={data.games} /> : null}
 							</Route>
 							<Route path="/profile/exchanges/">
 								{data.exchanges ? <ExchangesList accept={accept} reject={reject} fromMeList={data.exchanges.fromMeList} forMeList={data.exchanges.forMeList}/> : null}
 							</Route>
 						</Switch>
 					</div>
-					<div className="creation-panel">
-						<Cpanel sendGame={sendGame} />
+					<div className="right-side">
+						<div className="profile-card-wrapper">
+							{data.comments ? <ProfileCard {...props.user} myProfile={true} comments={data.comments} set={setAvatar}/> : null}
+						</div>
+						<div className="creation-panel">
+							<Cpanel sendGame={sendGame} />
+						</div>
 					</div>
 				</div>
 			) : <img className="img-fluid" src={require('./../images/wampus-bg.png')} alt="wampus" />}

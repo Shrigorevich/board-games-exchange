@@ -18,6 +18,7 @@ function Header(props) {
             <span className="nav-bar-item"><Link to="/">MAIN</Link></span>
             <span className="nav-bar-item"><Link to="/profile">PROFILE</Link></span>
             <span className="nav-bar-item"><Link to="/exchange">EXCHANGE</Link></span>
+            <span className="nav-bar-item" onClick={() => (props.search())}><i className="fas fa-search fa-sm"></i></span>
          </div>
          {!props.auth ? (
             <div className="auth">

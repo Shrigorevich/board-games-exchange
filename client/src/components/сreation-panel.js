@@ -40,9 +40,11 @@ const Cpanel = (props) => {
             <span>Price</span>
             <input type="text" name="price" onChange={changeHandler}/>
          </div>
-         <div className="cp-input">
-            <span>Picture</span>
-            <input type="file" name="picture" onChange={changeHandlerImage}/>
+         <div>
+            <label htmlFor="picture" className="custom-file-upload">
+               <i className="fa fa-cloud-upload"></i> Game picture
+            </label>
+            <input type="file" id="picture" name="picture" onChange={changeHandlerImage}/>
          </div>
          <div>
             <input type="submit" value="Send" className="btn btn-success"/>

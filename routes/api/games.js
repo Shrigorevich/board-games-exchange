@@ -4,29 +4,15 @@ const User = require("../../models/User");
 const {Game} = require("../../models/Game");
 const auth = require("./../../middlwares/auth");
 const imgurUpload = require("./../../middlwares/imgur-upload");
-const multer = require("multer");
-
-const storage = multer.diskStorage({
-   destination: function (req, file, cb) {
-      cb(null, "./uploads/");
-   },
-   filename: function (req, file, cb) {
-      cb(
-         null,
-         `${new Date().toLocaleDateString().replace(/\//g, "-")}-${
-            file.originalname
-         }`
-      );
-   },
-});
-
-const upload = multer({ storage: storage });
+const upload = require("./../../middlwares/multer");
+const cleaner = require("./../../middlwares/cleaner")
 
 router.post(
    "/create-game",
    auth,
    upload.single("picture"),
    imgurUpload,
+   cleaner,
    async (req, res) => {
 
       const picture = req.imgLink;
@@ -60,5 +46,12 @@ router.get("/full-list", async (req, res) => {
    const gameList = await Game.find();
    res.status(200).json(gameList);
 });
+
+router.get("/search/:string", async (req, res) => {
+   const regExp = new RegExp(`${req.params.string}`, 'i');
+   const gamesList = await Game.find({name: regExp})
+   res.status(200).json(gamesList)
+   
+})
 
 module.exports = router;

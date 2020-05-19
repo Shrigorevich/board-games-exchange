@@ -1,9 +1,0 @@
-{
-    "mongoUri": "mongodb+srv://shrigorevich:456385@cluster0-rehco.azure.mongodb.net/test?retryWrites=true&w=majority",
-    "jwtSecret": "sl_myJwtSecret",
-    "imgur": {
-        "client_id": "e733043278a1f72",
-        "mail": "shrigorevich@gmail.com",
-        "password": "qwe2283221488qwe"
-    }
-}
