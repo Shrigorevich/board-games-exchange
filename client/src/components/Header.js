@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Link} from "react-router-dom";
 
 function Header(props) {
-
+   
    const [form, setForm] = useState({
       username: "",
       password: "",
@@ -50,7 +50,7 @@ function Header(props) {
                <button className="btn btn-light" onClick={() => props.logOut()}>
                   Log Out
                </button>
-               <span className="username" >Hello, {props.user.username}</span>
+               <span className="username" >Hello, {props.user.firstName}</span>
             </div>
          )}
       </div>

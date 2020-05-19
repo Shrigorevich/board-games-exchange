@@ -45,6 +45,7 @@ const Main = (props) => {
 	const addUser = async (data) => {
 		try {
 			const req = await request("/api/users", "POST", data);
+			
 			setParams((viewParams) => {
 				return {
 					...viewParams,
@@ -87,7 +88,7 @@ const Main = (props) => {
 				logIn={logIn}
 				logOut={logOut}
 			/>
-			<Registration view={viewParams} addUser={addUser} />
+			<Registration view={viewParams} addUser={addUser} toggle={showReg} />
 			<div className="main-body">
 				{games.list ? <GameList list={games.list} user={props.user}/> : null}
 			</div>
