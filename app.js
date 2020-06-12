@@ -1,7 +1,7 @@
 const express = require("express");
 const connectDB = require("./db");
 const path = require("path");
-const cors = require("cors"); /*for development*/
+//const cors = require("cors"); /*for development*/
 const User = require("./models/User");
 const app = express();
 
